@@ -1,0 +1,1 @@
+exports.baseUrl = "./static/img/";//图片基路径
