@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            为什么会有本地化存储？
+                http是无状态的协议：服务器不会保存客户端的信息，所以一些场景无法实现，如：保持登录状态，页面共享数据;
+            cookie的来源有两种：
+                + 服务端设置set-cookie响应头
+                + 前端通过location.cookie = "key=value";设置
+            cookie配置：
+                name： cookie的名字
+                key：cookie的值
+                domain：cookie的作用域，低级域可以使用高级域的内容，不同域直接不可访问cookie
+                path: cookie的作用路径
+                //以下两个属性一般设置一个
+                expires：cookie的过期时间 new Date(); GMT格式的时间
+                max-age: cookie的有效时间 单位秒;多少秒后过期
+                //以下三个属性前端无法设置
+                httpOnly：前端是否能够获取
+                secure： https专用cookie
+                sameSite： 当跨域时，是否携带cookie
+            一个域名最多携带50个cookie，每一个大小最大为4kB
+            客服端发起请求时，会自动将cookie发送给服务端，这可能会造成无用的数据开销。
+            http请求报文中的cookie字段，之所以含有多个键值对，就是因为一个域名含有多个cookie
+        */
+    </script>
+</body>
+</html>
