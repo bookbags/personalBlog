@@ -1,7 +1,7 @@
 <template>
   <div class="project">
     <ul>
-      <li v-for="value in item" :key="value.id" @click="linkTo">
+      <li v-for="value in item" :key="value.id" @click="linkTo(value.url)">
         <Item
           :title="value.name"
           :description="value.description"
@@ -25,7 +25,8 @@ export default {
     };
   },
   methods:{
-    linkTo(){
+    linkTo(url){
+      this.$router.push("/abc");
       console.log("跳转到羡慕");
     }
   },
