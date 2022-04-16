@@ -20,7 +20,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   response => {//拦截响应，返回响应的数据对象
     if(response.headers.authorization){//将用户的token保存到localStorage
-      localStorage.adminData = response.headers.authorization;
+      localStorage.setItem("adminData", response.headers.authorization);
     }
     return response.data
   }

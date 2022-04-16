@@ -63,17 +63,6 @@ const actions = {
         }
       })
     })
-    //   const { username, password } = userInfo
-    //   return new Promise((resolve, reject) => {
-    //     loginApi(userInfo).then(response => {
-    //       const { data } = response
-    //       commit('SET_TOKEN', data.token)
-    //       setToken(data.token)
-    //       resolve()
-    //     }).catch(error => {
-    //       reject(error)
-    //     })
-    //   })
   },
 
   // get user info

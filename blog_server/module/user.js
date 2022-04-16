@@ -29,13 +29,11 @@ userRouter.post("/", async (req, res) => {
             uuid: token
         })
     } catch (err) {
-        res.status(500).send("用户名重复");
+        res.status(500).send(sendData(500, "用户名重复", ""));
         return;
     }
     res.header("authorization", token);
-    res.cookie("login", token);
-    resData.data = "success";
-    res.send(resData);
+    res.send(resData(200, "注册成功", ""));
 });
 
 //用户登录
@@ -60,13 +58,16 @@ userRouter.post("/login", (req, res) => {
 
     //创建token
     const token = createToken(userData, req.body.maxAge * 24 * 3600 || 24 * 3600); //7天免登陆或者1天免登陆
+    res.setHeader("authorization", token);
     res.send(resData(200, "", token));
 
 })
 
 //用户免登陆
 userRouter.get("/whoami", (req, res)=>{
+    console.log(req.headers.authorization);
     const result = decodeToken(req.headers.authorization);
+    console.log(result, "result");
     if(result){
         res.send(resData(200, "", req.headers.authorization));
     }else{

@@ -5,6 +5,7 @@ module.exports.createToken = function (body, maxAge) {
         expiresIn: maxAge
     });
 };
+
 module.exports.decodeToken = function (token) {
     try{
         return jwt.verify(token, key);
