@@ -19,12 +19,12 @@ blogTypeRouter.put("/:id", async (req, res) => {
             id: req.params.id
         }
     });
-    resData.data = (await blogType.findAll({
+    const data = (await blogType.findAll({
         where:{
             id: req.params.id
         }
     }))[0];
-    res.send(resData);
+    res.send(resData(200, "修改完成", data));
 });
 
 //删除分类
@@ -34,10 +34,9 @@ blogTypeRouter.delete("/:id", async (req, res) => {
             id: req.params.id
         }
     });
-    resData.code = "0";
-    resData.msg = "success";
-    resData.data = await blogType.findAll();
-    res.send(resData);
+    
+    const data = await blogType.findAll();
+    res.send(resData(200, "删除完成", "data"));
 });
 
 //增加分类
@@ -52,28 +51,25 @@ blogTypeRouter.post("/", async (req, res) => {
                 id: reqData.id
             }
         }))[0];
-        resData.code = 0;
-        resData.msg = "success";
-        res.send(resData);
+        res.send(resData(200, "添加完成", ""));
     }).catch(() => {
-        resData.code = 400;
-        resData.msg = "类名重复";
-        res.send(resData);
+        res.send(resData(500, "类名冲突", ""));
     })
 })
 
 // 查找
 blogTypeRouter.get("/", async (req, res) => {
-    resData.data = await blogType.findAll();
-    res.send(resData);
+    const data = await blogType.findAll();
+    res.send(resData(200, "success", data));
 });
+
 blogTypeRouter.get("/:id", async (req, res) => {
-    resData.data = (await blogType.findAll({
+    const data = (await blogType.findAll({
         where: {
             id: req.params.id
         }
     }))[0];
-    res.send(resData);
+    res.send(resData(200, "success", data));
 });
 
 module.exports = blogTypeRouter;

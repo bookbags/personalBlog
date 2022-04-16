@@ -18,13 +18,11 @@ blogRouter.post("/", (req, res) => {
     reqData.id = new Date().getTime() + parseInt(Math.random() * 100) + "";
     reqData.createDate = new Date().getTime() + "";
     blog.create(reqData).then(() => {
-        resData.data = reqData;
-        res.send(resData);
+        res.send(resData(200, "添加完成", reqData));
     }).catch((err) => {
         resData.code = 500;
         resData.msg = "标题重复";
-        console.log(err);
-        res.send(resData);
+        res.send(resData(500, "标题重复", err));
     })
 });
 
@@ -35,10 +33,7 @@ blogRouter.delete("/:id", async (req, res) => {
             id: req.params.id
         }
     });
-    resData.code = 0;
-    resData.msg = "";
-    resData.data = "true";
-    res.send(resData);
+    res.send(resData(200, "删除完成", ""));
 });
 
 //修改文章
@@ -48,12 +43,12 @@ blogRouter.put("/:id", async (req, res) => {
             id: req.params.id
         }
     });
-    resData.data = (await blog.findAll({
+    const data = (await blog.findAll({
         where: {
             id: req.params.id
         }
     }))[0];
-    res.send(resData);
+    res.send(resData(200, "修改完成"), data);
 });
 
 //获取文章
@@ -70,19 +65,22 @@ blogRouter.get("/", async (req, res) => {
         total,
         rows: []
     };
-    resData.data.rows = await blog.findAll({
+    const rows = await blog.findAll({
         limit,
         offset: page * limit
     })
-    res.send(resData);
+    res.send(resData(200, "success", {
+        total, 
+        rows
+    }));
 });
 
 //获取具体某一篇文章
 blogRouter.get("/:id", async (req, res)=>{
-    resData.data = await blog.findOne({
+    const data = await blog.findOne({
         where:{id: req.params.id}
     })
-    res.send(resData);
+    res.send(resData(200, "success", data));
 })
 
 module.exports = blogRouter;

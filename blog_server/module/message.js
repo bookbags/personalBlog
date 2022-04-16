@@ -14,8 +14,7 @@ const messageRouter = express.Router();
 
 //获取留言
 messageRouter.get("/", async (req, res) => { //可以做成分页的形式
-    resData.data = await message.findAll({include: user});
-    res.send(resData);
+    res.send(resData(200, "success", await message.findAll({include: user})));
 });
 //删除留言
 messageRouter.delete("/:id", async (req, res) => {
@@ -24,8 +23,7 @@ messageRouter.delete("/:id", async (req, res) => {
             id: req.params.id
         }
     })
-    resData.data = "success";
-    res.send(resData);
+    res.send(resData(200, "删除成功", ""));
 });
 
 // 添加留言
@@ -34,8 +32,7 @@ messageRouter.post("/", async (req, res) => {
     reqData.createDate = new Date().getTime() + "";
     reqData.id = new Date().getTime() + Number(Math.random() * 100)
     await message.create(reqData);
-    resData.data = reqData;
-    res.send(resData);
+    res.send(200, "添加完成", reqData);
 });
 
 module.exports = messageRouter;

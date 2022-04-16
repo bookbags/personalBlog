@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 //用户访问的一件事就是鉴权，判断用户的权限
-// app.use(judegPower);
+app.use(judegPower);
 
 //查看请求
 app.use((req, res, next)=>{

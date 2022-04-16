@@ -9,9 +9,10 @@ const resData = require("./resData");
 const {
     banner
 } = require("../dataBase/index");
+
 bannerRouter.get("/", async (req, res) => {
-    resData.data = await banner.findAll();
-    res.send(resData);
+    const data = await banner.findAll();
+    res.send(resData(0, "success", data));
 });
 
 bannerRouter.put("/:id", async (req, res) => {
@@ -19,7 +20,8 @@ bannerRouter.put("/:id", async (req, res) => {
     await banner.update(req.body, {
         where: req.params
     });
-    resData.data = await banner.findAll();
-    res.send(resData);
+    const data = await banner.findAll();
+    res.send(resData(200, "修改完成", data));
 });
+
 module.exports = bannerRouter;

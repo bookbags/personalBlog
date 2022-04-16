@@ -42,7 +42,7 @@ userRouter.post("/", async (req, res) => {
 userRouter.post("/login", (req, res) => {
     console.log(req.body.capture,"验证码为" ,svg.getText(), svg.getText() !== req.body.capture);
     if(svg.getText() !== req.body.capture){
-        return res.send("验证码错误");
+        return res.send(resData(500, "验证码错误", ""));
     }
     //用户信息
     const userData = {
@@ -56,22 +56,22 @@ userRouter.post("/login", (req, res) => {
             name: userData.name
         }
     });
-    if(!result) return res.status(500).send("用户不存在, 亲登录");
+    if(!result) return res.send(resData(500, "用户不存在，请注册"));
 
     //创建token
     const token = createToken(userData, req.body.maxAge * 24 * 3600 || 24 * 3600); //7天免登陆或者1天免登陆
-    res.header("authorization", token);
-    res.cookie("login", token);
-    resData.code = "200";
-    resData.data = token;
-    res.send(resData);
+    res.send(resData(200, "", token));
+
 })
 
 //用户免登陆
 userRouter.get("/whoami", (req, res)=>{
     const result = decodeToken(req.headers.authorization);
-    resData.data = req.headers.authorization;
-    res.send(resData);
+    if(result){
+        res.send(resData(200, "", req.headers.authorization));
+    }else{
+        res.send(resData(500, "token过期或者被篡改", req.headers.authorization));
+    }
 })
 
 module.exports = userRouter;

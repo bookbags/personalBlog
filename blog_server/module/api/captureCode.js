@@ -9,6 +9,7 @@ module.exports.getSvg = function(){
     text = captcha.text;
     return captcha.data;
 };
+
 module.exports.getText = function(){
     return text;
 }

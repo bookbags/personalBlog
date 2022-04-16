@@ -16,16 +16,11 @@ const itemRouter = express.Router();
 itemRouter.post("/", async (req, res) => {
     const reqData = req.body;
     reqData.id = new Date().getTime() + parseInt(Math.random() * 100) + "";
-    console.log(reqData);
+
     item.create(reqData).then(() => {
-        resData.data = reqData;
-        resData.code = 0;
-        resData.msg = "";
-        res.send(resData);
+        res.send(resData(200, "添加成功", reqData));
     }).catch(() => {
-        resData.code = 500;
-        resData.msg = "项目名称冲突";
-        res.send(resData);
+        res.send(resData(500, "项目名称冲突", ""))
     })
 });
 //删除一个项目
@@ -35,8 +30,7 @@ itemRouter.delete("/:id", async (req, res) => {
             id: req.params.id
         }
     })
-    resData.data = "success";
-    res.send(resData);
+    res.send(resData(200, "删除成功", ""));
 });
 
 //修改项目
@@ -46,18 +40,18 @@ itemRouter.put("/:id", async (req, res) => {
             id: req.params.id
         }
     });
-    resData.data = await item.findOne({
+    const data = await item.findOne({
         where:{
             id: req.params.id
         }
     })
-    res.send(resData);
+    res.send(resData(200, "修改完成", data));
 });
 
 //获取
 itemRouter.get("/", async (req, res) => {
-    resData.data = await item.findAll();
-    res.send(resData);
+    const data = await item.findAll();
+    res.send(resData(200, "success", data));
 });
 
 module.exports = itemRouter;
