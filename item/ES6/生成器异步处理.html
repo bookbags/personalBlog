@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        function* mark(){
+            yield 1;
+            yield 2;
+        }
+        function run(mark) {
+            let result = mark.next(); //启动任务序列
+            next(result);
+            function next(result) {
+                console.log("result",result);
+                if(result.done)return;//生成器迭代结束
+                if (typeof result.value.then === "function") { //promise
+                    result.value.then(data => {
+                        result = mark.next(data);
+                        next(result);
+                    })
+                } else {
+                    result = mark.next(result.value);
+                    next(result);
+                }
+            }
+        }
+        run(mark());
+    </script>
+</body>
+
+</html>

@@ -23,6 +23,7 @@ itemRouter.post("/", async (req, res) => {
         res.send(resData(500, "项目名称冲突", ""))
     })
 });
+
 //删除一个项目
 itemRouter.delete("/:id", async (req, res) => {
     await item.destroy({

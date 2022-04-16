@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /*
+            cookie存储的缺点：
+                容量小 4KB
+                前端的可操作性不高
+                容易造成不必要的数据开销，自动随请求发给服务端
+            storage：
+                html5提出的本地化存储方法，也是键值对的形式
+                容量为5MB，浏览器不同，容量也随之不同
+                值只能是String类型
+                不能跨域
+                + localStorage
+                    没有过期时间，存活时间完全有前端控制
+                + sessionStorage
+                    页面关闭时，消失
+        */
+       //添加storage
+       localStorage.setItem("name", "hello world");
+       //获取storage
+       localStorage.getItem("name");
+       //删除storage
+       localStorage.removeItem("name");
+       //清空所有的storage
+       localStorage.clear();
+       //按照浏览器的存储顺序获取storage
+       localStorage.key(0);
+       //获取storage的数量
+       localStorage.length;
+    </script>
+</body>
+</html>

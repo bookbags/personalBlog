@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>迭代器</title>
+</head>
+
+<body>
+    <div>1</div>
+    <div>2</div>
+    <div>3</div>
+    <div>4</div>
+    <div>5</div>
+    <div>6</div>
+    <div>7</div>
+    <div>8</div>
+    <div>9</div>
+    <div>10</div>
+    <script>
+        //创建斐波那锲数列的迭代器
+        function CreateFBItirm() {
+            let last1 = 1, last2 = 1, count = 1,
+                value = 0;
+            return {
+                next() {
+                    if (count <= 2) {
+                        value = 1;
+                    } else {
+                        value = last1 + last2;
+                        last2 = last1;
+                        last1 = value;
+                    }
+                    count += 1;
+                    return {
+                        value,
+                        done: false
+                    }
+                }
+            }
+        }
+        const fb = new CreateFBItirm();
+        //可迭代对象
+        const div = document.querySelectorAll("div");
+        divIte = div[Symbol.iterator]();//获取迭代器
+        const array = [1, 2, 3, 4, 5, 6];
+        const arrayIte = array[Symbol.iterator]();//获取数组迭代器
+
+        const obj = {//普通对象转可迭代对象
+            name: "shutao",
+            value: 100,
+            [Symbol.iterator](){
+                let i = -1, keys = Object.keys(this);
+                return {
+                    next:()=>{
+                        i += 1;
+                        return {
+                            value: this[keys[i]],
+                            done: i >= keys.length
+                        }
+                    }
+                }
+            }
+        }
+        const objIte = obj[Symbol.iterator]();
+
+        for(const item of obj){//item 就是可迭代对象的迭代器返回值的value属性值
+            console.log(item);
+        }
+
+        //for of 原理
+        let item = objIte.next();
+        while(!item.done){
+            console.log(item.value);
+            item = objIte.next();
+        }
+        //可迭代对象转数组
+        let arr = [...obj];//数组的值就是迭代器的返回值的value属性
+        console.log(arr);
+    </script>
+</body>
+
+</html>
