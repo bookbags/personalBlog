@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set</title>
+</head>
+<body>
+    <script>
+        //为了兼容ES6的其他的API，迭代对象的编写，必须满足ES6的规范
+        const set = new Set([1, 2, 3, 4, 5]);//可以传入可迭代对象, 保存可迭代对象的迭代值的value属性
+        const obj = {
+            name: "shutao",
+            value: 100
+        }
+
+        const ge = createIte();
+        const set1 = new Set(ge);
+        console.log(set1);//set1 保存了"shutao"和100
+
+        function* createIte(){
+            const keys = Object.keys(obj);
+            for(let i = 0, len = keys.length; i < len; i ++){
+                yield obj[keys[i]];
+            }
+        }
+        //集合转数组;
+        const array1 = [...set1];
+        console.log(array1);
+
+        //应用
+        let arry1 = [1, 2, 3, 4, 5, 6],
+        arry2 = [3, 4, 5, 6, 7, 8];
+        //数组并集
+        const subArray = [...new Set([...arry1, ...arry2])];
+        console.log("并集", subArray);
+        //交集
+        const crossArry = [...new Set(arry1)].filter(item => arry2.indexOf(item) >= 0);
+        console.log("交集", crossArry);
+        //差集
+        const diff1Arry = [...new Set(arry1)].filter(item => arry2.indexOf(item) === -1);
+        const diff2Arry = [...new Set(arry2)].filter(item => arry1.indexOf(item) === -1);
+        console.log("arry1 - arry2", diff1Arry);
+        console.log("arry2 - arry1", diff2Arry);
+        //集合的遍历
+        const newSet = new Set([1, 5, 2, 4, 3]);
+        
+        //集合是可迭代的，所以可以使用for-of循环
+        for(item of newSet){
+            console.log("for-of",item);
+        }
+        //集合是无序的，所以index和item的值是一样的
+        newSet.forEach((item, index, self)=>console.log(item, index, self));
+    </script>
+</body>
+</html>

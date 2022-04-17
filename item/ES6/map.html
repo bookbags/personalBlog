@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>map</title>
+</head>
+
+<body>
+    <script>
+        //创建一个具有初始值得map，必须传入一个可迭代对象
+        const map = new Map([
+            [1, 2, 3],
+            [2, 3],
+            [3]
+        ]); //[1, 2, 3]忽略3
+        console.log(map);
+        //创建可迭代对象，且返回值的value也是可迭代对象
+        const obj = {
+            name: "book",
+            year: 20,
+            sex: "boy"
+        };
+
+        function* createGe(obj, sign = 0) {
+            const keys = Object.keys(obj);
+            for (let i = 0, len = keys.length; i < len; i++) {
+                if (sign === 0) {
+                    console.log("返回生成器");
+                    yield [keys[i], obj[keys[i]]];//目前为止，返回数组才是正确的
+                    // yield createGe({//该段代码同样返回一个可迭代对象，为什么无法得到对应的值? 可迭代对象，不等同于迭代器，该处返回的是迭代器
+                    //     myKey: keys[i],
+                    //     value: obj[keys[i]]
+                    // }, 1);
+                    // yield {//即使返回可迭代对象，任然发生错误
+                    //     myKey: keys[i],
+                    //     value: obj[keys[i]],
+                    //     *[Symbol.iterator](){
+                    //         const keys = Object.keys(this);
+                    //         for(const item of keys){
+                    //             yield this[item];
+                    //         }
+                    //     }
+                    // }
+                } else {
+                    yield obj[keys[i]];
+                }
+            }
+        }
+        const ge = createGe(obj);
+        const map1 = new Map(ge);
+        console.log("迭代", map1);
+        //键值的相等判断通过Object.is(), 同样map认为 +0 和 -0相等
+    </script>
+</body>
+
+</html>

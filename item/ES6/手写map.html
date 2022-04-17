@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>手写map</title>
+</head>
+
+<body>
+    <script>
+        const MyMap = (() => { //必须传递可迭代对象
+            const _array = []; //保存键值
+            let len = 0; //保存键值对的数量
+            function getObj(key) { //根据key返回对象
+                for (const item of _array) {
+                    if (isEqual(item.key, key)) {
+                        return item;
+                    }
+                }
+                return undefined;
+            }
+
+            function isEqual(i, j) {
+                if (i === 0 && j === 0) {
+                    return ture;
+                }
+                return Object.is(i, j);
+            }
+
+            function isIterator(obj) {
+                return typeof obj[Symbol.iterator] === "function";
+            }
+            return class {
+                constructor(iterativeObj = []) {
+                    if (!isIterator(iterativeObj)) {
+                        throw new TypeError("this in not a iterator that " + iterativeObj);
+                    }
+                    for (const item of iterativeObj) {
+                        if (!isIterator(item)) {
+                            throw new TypeError("this in not a iterator that return value " + item);
+                        }
+                        const iterator = item[Symbol.iterator]();
+                        const key = iterator.next().value;
+                        const value = iterator.next().value;
+                        this.set(key, value);
+                    }
+                }
+                get size() {
+                    return len;
+                }
+                get array(){
+                    return _array.slice(0);
+                }
+                set(key, value) {
+                    const obj = getObj(key);
+                    if (obj) {
+                        obj.value = value;
+                    } else {
+                        _array.push({
+                            key,
+                            value
+                        });
+                        len += 1;
+                    }
+                }
+                has(key) {
+                    return !!getObj(key);
+                }
+                delete(key) {
+                    const index = _array.indexOf(key);
+                    _array.splice(index, 1);
+                    len -= 1;
+                }
+                clear() {
+                    _array.length = 0;
+                    len = 0;
+                }
+                *[Symbol.iterator](){
+                    for(const item of _array){
+                        yield [item.key, item.value];
+                    }
+                }
+            }
+
+        })()
+    </script>
+    <script>
+        const map = new MyMap([[1, 2], [2, 3], [3, 4]]);
+    </script>
+</body>
+
+</html>
