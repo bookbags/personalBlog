@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    :root {
+        height: 100%;
+    }
+
+    .container,
+    body {
+        height: 100%;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    .container {
+        position: relative;
+        perspective: 800px;
+        perspective-origin: center 0px;
+        transform-style: preserve-3d;
+    }
+
+    img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 400px;
+        height: 200px;
+        transition: all 2s;
+    }
+
+    .img0 {
+        transform: translateX(-600px) translateY(-200px);
+    }
+
+    .img1 {
+        transform: translateX(-400px) translateY(-200px) translateZ(100px);
+    }
+
+    .img2 {
+        transform: translateX(-200px) translateY(-200px) translateZ(200px);
+    }
+
+    .img3 {
+        transform: translateX(0px) translateY(-200px) translateZ(100px);
+    }
+
+    .img4 {
+        transform: translateX(200px) translateY(-200px);
+    }
+
+    .img5 {
+        transform: translateX(0px) translateY(-200px) translateZ(-100px);
+    }
+
+    .img6 {
+        transform: translateX(-200px) translateY(-200px) translateZ(-200px);
+    }
+
+    .img7 {
+        transform: translateX(-400px) translateY(-200px) translateZ(-100px);
+    }
+</style>
+
+<body>
+    <div class="container">
+        <img class="img0" src="../../img/img0.jpg">
+        <img class="img1" src="../../img/img1.jpg">
+        <img class="img2" src="../../img/img2.jpg">
+        <img class="img3" src="../../img/img3.jpg">
+        <img class="img4" src="../../img/img6.jpg">
+        <img class="img5" src="../../img/img7.jpg">
+        <img class="img6" src="../../img/img8.jpg">
+        <img class="img7" src="../../img/img9.jpg">
+    </div>
+    <script>
+        const imgs = document.querySelectorAll("img");
+        let i = 0;
+        for(const img of imgs){
+            img.className = "img" + i;
+            i += 1;
+        }
+        setInterval(()=>{
+            for(const img of imgs){
+                const index = (+/\d/.exec(img.className)[0] + 1) % 8;
+                img.className = "";
+                img.className = "img" + index;
+            }
+        }, 2000);
+    </script>
+</body>
+
+</html>
