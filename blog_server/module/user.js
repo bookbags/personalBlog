@@ -14,6 +14,7 @@ const {
     decodeToken
 } = require("./api/jwt");
 const userRouter = express.Router();
+
 // 添加用户
 userRouter.post("/", async (req, res) => {
     const token = createToken({
@@ -66,12 +67,12 @@ userRouter.post("/login", (req, res) => {
 //用户免登陆
 userRouter.get("/whoami", (req, res)=>{
     console.log(req.headers.authorization);
-    const result = decodeToken(req.headers.authorization);
-    console.log(result, "result");
+    const result = decodeToken(req.headers.authorization.split(" ")[1]);
+    console.log(result, "user is not login", req.headers.authorization.split(" ")[1]);
     if(result){
         res.send(resData(200, "", req.headers.authorization));
     }else{
-        res.send(resData(500, "token过期或者被篡改", req.headers.authorization));
+        res.send(resData(500, "token过期或者被篡改", ""));
     }
 })
 

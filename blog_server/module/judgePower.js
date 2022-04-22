@@ -34,6 +34,7 @@
      } else { //有，判断用户是否存在, token是否正确
         console.log("cookie", cookie.split(" ")[1]);
          const token = jwt.decodeToken(cookie.split(" ")[1]);
+         console.log("cookie验证结果", token);
          if (token) {
              next();
          } else {

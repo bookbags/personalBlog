@@ -26,9 +26,9 @@ router.beforeEach(async(to, from, next) => {
   }else{//未登录，判断是否具有cookie
     const cookie = getToken();
     if(cookie){
-      let data;
       try{
-        await store.dispatch('user/getInfo');
+        const data = await store.dispatch('user/getInfo');
+        console.log("data", data);
         //如果没报错说明验证成功
         if(to.path === "/login"){
           next({path: "/"})

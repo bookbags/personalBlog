@@ -29,15 +29,6 @@ const mutations = {
   RESET_STATE: (state) => {
     Object.assign(state, getDefaultState())
   },
-  // SET_TOKEN: (state, token) => {
-  //   state.token = token
-  // },
-  // SET_NAME: (state, name) => {
-  //   state.name = name
-  // },
-  // SET_AVATAR: (state, avatar) => {
-  //   state.avatar = avatar
-  // },
   SET_USER: (state, user) => {
     state.user = user;
   }
@@ -47,8 +38,7 @@ const actions = {
   login({
     commit
   }, userInfo) {
-    //commit 是全局的commit
-    //userInfo 就是表单数据
+    //commit 是全局的commit，userInfo 就是表单数据
     return new Promise((resolve, reject) => {
       loginApi(userInfo).then(res => {
         const {
@@ -72,12 +62,13 @@ const actions = {
   }) {
     return new Promise((resolve, reject) => {
       getInfoApi().then((data) => { //得到服务器对localStorage的判断结果
+        console.log("验证",data, !!data.data);
         if (data.data) {
           commit("SET_USER", data.data);
           resolve(data);
         } else {
           console.log("无效cookie", data);
-          reject("登录已过期");
+          reject(data.msg);
         }
       })
     })
