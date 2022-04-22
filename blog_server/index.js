@@ -15,6 +15,12 @@ const svg = require("./module/api/captureCode");
 const upload = require("./module/api/upload");
 const HtmlUrl = path.resolve(__dirname, "./dist");
 
+//查看请求
+app.use((req, res, next)=>{
+    console.log("请求路径为", req.path);
+    console.log("请求方式为", req.method);
+    next();
+})
 
 //获取post的数据
 app.use(express.json());
@@ -25,13 +31,6 @@ app.use(cookieParser());
 
 //用户访问的一件事就是鉴权，判断用户的权限
 app.use(judegPower);
-
-//查看请求
-app.use((req, res, next)=>{
-    console.log("请求路径为", req.path);
-    console.log("请求方式为", req.method);
-    next();
-})
 
 //获取静态资源
 app.use(express.static(staticBaseUrl));

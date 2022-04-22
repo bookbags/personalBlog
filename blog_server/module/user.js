@@ -39,7 +39,7 @@ userRouter.post("/", async (req, res) => {
 //用户登录
 userRouter.post("/login", (req, res) => {
     console.log(req.body.capture,"验证码为" ,svg.getText(), svg.getText() !== req.body.capture);
-    if(svg.getText() !== req.body.capture){
+    if(svg.getText().toLowerCase() !== req.body.capture.toLowerCase()){
         return res.send(resData(500, "验证码错误", ""));
     }
     //用户信息
