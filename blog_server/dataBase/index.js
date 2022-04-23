@@ -6,5 +6,6 @@ module.exports = {
     globalSet: require("./tables/globalSet"),
     item: require("./tables/item"),
     leaveWord: require("./tables/leaveWord"),
-    user: require("./tables/user")
+    user: require("./tables/user"),
+    aboutMe: require("./tables/aboutMe")
 }

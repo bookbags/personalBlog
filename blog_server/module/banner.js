@@ -6,6 +6,7 @@
 const express = require("express");
 const bannerRouter = express.Router();
 const resData = require("./resData");
+
 const {
     banner
 } = require("../dataBase/index");

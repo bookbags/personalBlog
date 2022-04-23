@@ -9,6 +9,7 @@ const blogRouter = require("./module/blog");
 const messageRouter = require("./module/message");
 const projectRouter = require("./module/project");
 const userRouter = require("./module/user");
+const aboutMeRouter = require("./module/aboutMe");
 const judegPower = require("./module/judgePower");
 const cookieParser = require("cookie-parser");
 const svg = require("./module/api/captureCode");
@@ -30,7 +31,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 //用户访问的一件事就是鉴权，判断用户的权限
-app.use(judegPower);
+// app.use(judegPower);
 
 //获取静态资源
 app.use(express.static(staticBaseUrl));
@@ -44,6 +45,7 @@ app.use("/api/blog", blogRouter);
 app.use("/api/message", messageRouter);
 app.use("/api/project", projectRouter);
 app.use("/api/user", userRouter);
+app.use("/api/about", aboutMeRouter);
 
 //获取验证码
 app.get("/api/capture", (req, res)=>{

@@ -7,14 +7,11 @@ import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
-
 // const whiteList = ['/login'] //  whitelist don't need check permission
 // 在路由中添加 auth: tur, replace whiteList
 // 导航守卫
-router.beforeEach(async(to, from, next) => {
-  // 进度条开启
-  NProgress.start()
-  //表示用户处于登录状态
+router.beforeEach(async(to, from, next) => {// 进度条开启
+  NProgress.start()//表示用户处于登录状态
   const loginState = store.getters.user;
   document.title = getPageTitle(to.meta.title);
   if(loginState){
