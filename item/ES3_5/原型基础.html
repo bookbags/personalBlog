@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        console.log(Object.__proto__ == Function.prototype);
+        console.log(Array.__proto__.constructor.name);
+        console.log(Number.__proto__.constructor.name);
+        console.log(Boolean.__proto__.constructor.name);
+        /*
+            所有的对象都是由new 构造函数创建的
+            函数只是一个特殊的对象
+            所有的内置函数的__proto__ 必然只想 Function.prototype.包括Function.__proto__
+            构造函数创建的对象的隐式原型只和构造函数的prototype有关系和他的隐式原型无关
+        */
+       function test(){}
+       console.log(test.__proto__.constructor.name);
+       /*
+        注意区分同一个函数的__proto__ 和 prototype 属于两条不同的原型链
+       */
+      console.log(Function.prototype.__proto__.constructor.name);
+      /*
+        默认情况下函数的prototype的构造函数都是Object
+      */
+     console.log(Object.__proto__.__proto__.constructor.name);
+     /*
+        Function 构造了Object， Object构造了Function.prototype;
+     */
+    </script>
+</body>
+</html>

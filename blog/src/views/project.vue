@@ -26,8 +26,7 @@ export default {
   },
   methods:{
     linkTo(url){
-      this.$router.push("/abc");
-      console.log("跳转到羡慕");
+      location.href = url;
     }
   },
   async created() {

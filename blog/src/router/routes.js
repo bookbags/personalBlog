@@ -5,6 +5,7 @@ import homePage from "@/views/homePage/index.vue"
 import project from "@/views/project.vue"
 import article from "@/views/article.vue"
 import leaveWord from "@/views/leaveWord.vue"
+import task from "@/views/task"
 
 export const routes = [
     {
@@ -42,6 +43,10 @@ export const routes = [
                         })
                     }
                 }
+            },{
+                path: "/task",
+                name: "task",
+                component: task
             }
         ]
     },{
