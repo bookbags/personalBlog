@@ -55,11 +55,12 @@
     <el-pagination
       background
       layout="prev, pager, next"
-      :total="totalPage"
+      :total="allBlog"
       :page-size="eachPageBlog"
       :current-page="currentPage"
-      :next-click="nextPage"
-      :prev-click="prevPage"
+      @current-change="jumpPage"
+      @next-click="nextPage"
+      @prev-click="prevPage"
     >
     </el-pagination>
     <el-dialog
@@ -107,17 +108,18 @@ export default {
   data() {
     return {
       tableData: [],
-      currentPage: 0,
+      currentPage:1,
       allBlog: 10, //总的博客数
-      eachPageBlog: 5, //每页显示多少文章
+      eachPageBlog: 8, //每页显示多少文章
       dialogTableVisible: false,
       blogData: null, //需要修改的博客的数据
     };
   },
   methods: {
     async fetchBlog() {
-      const data = await getBlog(this.currentPage, this.eachPageBlog);
-      console.log(data);
+      const data = await getBlog(this.currentPage - 1, this.eachPageBlog);
+      console.log("文章数据", data);
+      this.allBlog = data.data.total;
       this.tableData = data.data.rows;
     },
     deleteSure(id) {
@@ -162,12 +164,11 @@ export default {
     },
     nextPage(){
         this.currentPage += 1;
-    }
-  },
-  computed: {
-    totalPage() {
-      return Math.ceil(this.allBlog / this.eachPageBlog);
     },
+    jumpPage(page){
+      this.currentPage = page;
+      this.fetchBlog();
+    }
   },
   created() {
     this.fetchBlog();
