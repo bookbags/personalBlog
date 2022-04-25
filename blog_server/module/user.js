@@ -38,9 +38,9 @@ userRouter.post("/", async (req, res) => {
 });
 
 //用户登录
-userRouter.post("/login", (req, res) => {
-    console.log(req.body.capture,"验证码为" ,svg.getText(), svg.getText() !== req.body.capture);
-    if(svg.getText().toLowerCase() !== req.body.capture.toLowerCase()){
+userRouter.post("/login", async (req, res) => {
+    console.log(req.body.capture, "验证码为", svg.getText(), svg.getText() !== req.body.capture);
+    if (svg.getText().toLowerCase() !== req.body.capture.toLowerCase()) {
         return res.send(resData(500, "验证码错误", ""));
     }
     //用户信息
@@ -50,28 +50,39 @@ userRouter.post("/login", (req, res) => {
     };
 
     //判断用户是否存在
-    const result = user.findOne({
+    const result = await user.findOne({
         where: {
             name: userData.name
         }
     });
-    if(!result) return res.send(resData(500, "用户不存在，请注册"));
-
-    //创建token
-    const token = createToken(userData, req.body.maxAge * 24 * 3600 || 24 * 3600); //7天免登陆或者1天免登陆
-    res.setHeader("authorization", token);
-    res.send(resData(200, "", token));
-
+    if (!result) return res.send(resData(500, "用户不存在，请注册"));
+    else if (result.dataValues.uuid) {
+        const token = result.dataValues.uuid;
+        res.setHeader("authorization", token);
+        res.send(resData(200, "", token));
+    } else {
+        //创建token
+        const token = createToken(userData, req.body.maxAge * 24 * 3600 || 24 * 3600); //7天免登陆或者1天免登陆
+        await user.update({
+            ...userData,
+            uuid: token
+        }, {
+            where: {
+                name: userData.name
+            }
+        });
+        res.setHeader("authorization", token);
+        res.send(resData(200, "", token));
+    }
 })
 
 //用户免登陆
-userRouter.get("/whoami", (req, res)=>{
-    console.log(req.headers.authorization);
+userRouter.get("/whoami", (req, res) => {
     const result = decodeToken(req.headers.authorization.split(" ")[1]);
     console.log(result, "user is not login", req.headers.authorization.split(" ")[1]);
-    if(result){
+    if (result) {
         res.send(resData(200, "", req.headers.authorization));
-    }else{
+    } else {
         res.send(resData(500, "token过期或者被篡改", ""));
     }
 })

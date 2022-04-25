@@ -138,7 +138,7 @@ export const constantRoutes = [{
       name: 'aboutMe',
       component: () => import('@/views/aboutMe/index'),
       meta: {
-        title: '关于我',
+        title: '任务',
         icon: 'form',
         auth: true
       }
