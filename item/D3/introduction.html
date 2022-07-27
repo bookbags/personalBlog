@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type="module">
+        import "./node_modules/d3/dist/d3.js";//commonJS的语法导出接口，所以es6无法获取D3的引用，但是d3全局注册了一个d3引用
+        d3.select('div')
+        .data([1, 2, 3])
+        .enter()
+        .append("div")
+        .style('width', "200px")
+        .style("height", "200px")
+        .style("background-color", "black")
+        .style("margin-top", "1em")
+        .transition()
+        .style("width", (d, i)=>{
+            return d *300 + "px";
+        })
+        .duration(2000)
+        .delay(1000);
+        d3.histogram([1, 2, 3, 4, 5, 6]);
+        
+    </script>
+</body>
+</html>

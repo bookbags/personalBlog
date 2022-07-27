@@ -63,7 +63,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
 .viewPage {
   width: 100%;
   height: 100%;
@@ -85,20 +85,20 @@ export default {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      $distance: 40px;
-      $fontSize: 2rem;
+      @distance: 40px;
+      @fontSize: 2rem;
       user-select: none;
       overflow: hidden;
       white-space: nowrap;
       &.title {
-        font-size: $fontSize;
-        margin-top: -$distance;
-        margin-left: $fontSize;
+        font-size: @fontSize;
+        margin-top: -@distance;
+        margin-left: @fontSize;
       }
       &.des {
-        font-size: $fontSize * 1.5;
-        margin-top: $distance;
-        margin-left: $fontSize * 2;
+        font-size: @fontSize * 1.5;
+        margin-top: @distance;
+        margin-left: @fontSize * 2;
       }
     }
   }

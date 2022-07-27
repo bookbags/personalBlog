@@ -3,6 +3,7 @@ import {
 } from "@/api/user.js";
 
 export default {
+    namespace: true,//启动命名空间
     state: { //保存用户的登录信息
         admin: ""
     },

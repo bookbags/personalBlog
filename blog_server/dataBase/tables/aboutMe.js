@@ -3,7 +3,8 @@ const {DataTypes} = require("sequelize");
 const aboutMe = sequelize.define("aboutMe",{
     taskName: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     taskType:{
         type: DataTypes.STRING,

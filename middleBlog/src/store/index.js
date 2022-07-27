@@ -15,5 +15,5 @@ const store = new Vuex.Store({
   },
   getters
 })
-Window.store = store;
+
 export default store

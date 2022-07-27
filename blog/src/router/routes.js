@@ -9,29 +9,24 @@ import task from "@/views/task"
 
 export const routes = [
     {
-        path: "*",//当所有的路由都匹配不上时，显示404，与路由规则的位置无关
-        name: "404",
-        component: notFind
-    },
-    {
         path: "/",
         component:layout,
         name: "layout",
         children:[
             {
-               path: "/index",
+               path: "index",
                name: "homePage",
                component: homePage
             },{
-                path: "/project",
+                path: "project",
                 name: "project",
                 component: project
             },{
-                path: "/article",
+                path: "article",
                 name: "article",
                 component: article
             },{
-                path: "/leaveWord",
+                path: "leaveWord",
                 name: "leaveWord",
                 component: leaveWord,
                 beforeEnter(to, from, next){
@@ -44,13 +39,19 @@ export const routes = [
                     }
                 }
             },{
-                path: "/task",
+                path: "task",
                 name: "task",
                 component: task
             }
         ]
-    },{
+    },
+    {
         path: "/login",
         component: login
-    }
+    },
+    {
+        path: "*",//当所有的路由都匹配不上时，显示404，与路由规则的位置无关
+        name: "404",
+        component: notFind
+    },
 ]

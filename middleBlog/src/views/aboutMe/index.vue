@@ -7,9 +7,14 @@
         prop: 'taskType',
         order: 'descending',
       }"
-      @row-dblclick="achieveTask"
+      @row-dblclick="schedule"
       @row-contextmenu="changeTask"
     >
+      <el-table-column label="状态">
+        <template slot-scope="scope">
+          {{ scope.row.taskStatus ? "完成" : "未完成" }}
+        </template>
+      </el-table-column>
       <el-table-column label="任务名称">
         <template slot-scope="scope">
           {{ scope.row.taskName }}
@@ -30,14 +35,20 @@
           {{ transformTimestamp(scope.row.createDate) }}
         </template>
       </el-table-column>
-      <el-table-column label="状态">
-        <template slot-scope="scope">
-          {{ scope.row.taskStatus ? "完成" : "未完成" }}
-        </template>
-      </el-table-column>
       <el-table-column label="完成时间">
         <template slot-scope="scope">
           {{ getAchieveTime(scope.row) }}
+        </template>
+      </el-table-column>
+      <el-table-column label="是否完成">
+        <template slot-scope="scope">
+          <el-switch
+            v-model="scope.row.taskStatus"
+            active-color="#13ce66"
+            inactive-color="#ff4949"
+            @change="achieveTask(scope.row)"
+          >
+          </el-switch>
         </template>
       </el-table-column>
     </el-table>
@@ -104,6 +115,7 @@ export default {
       },
       taskType: [],
       addOrChange: "add",
+      value: false
     };
   },
   methods: {
@@ -122,18 +134,16 @@ export default {
       return a - b;
     },
     async achieveTask(row) {
-        const task = {
-          ...row,
-        }
-        task.taskStatus = !task.taskStatus;
-        if(task.taskStatus){
-            task.achieveTime = new Date().getTime();
-        }else{
-            task.achieveTime = false;
-        }
-      this.taskList = (
-        await setTaskApi(task)
-      ).data;
+      const task = {
+        ...row,
+      };
+      console.log(task);
+      if (task.taskStatus) {
+        task.achieveTime = new Date().getTime();
+      } else {
+        task.achieveTime = false;
+      }
+      this.taskList = (await setTaskApi(task)).data;
     },
     async changeTask(row, column, event) {
       event.preventDefault();
@@ -167,6 +177,7 @@ export default {
     this.taskList = await getTaskApi();
     this.taskList = this.taskList.data.data;
     this.taskType = (await getTaskTypeApi()).data;
+    console.log("任务列表", this.taskList);
   },
 };
 </script>

@@ -1,11 +1,10 @@
 <template>
-  <div class="avatar">
-    <img
-      :src="$store.state.global.globalData.avatar"
-      :style="{
+  <div class="avatar" :style="{
         width: size,
         heigth: size,
-      }"
+      }">
+    <img
+      :src="src"
     />
   </div>
 </template>
@@ -16,6 +15,7 @@ export default {
     return {};
   },
   props: {
+    src:String,
     size: {
       type: String,
       default: "2rem",
@@ -24,9 +24,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-img {
-  object-fit: cover;
+<style lang="less" scoped>
+div{
   border-radius: 50%;
+  margin: 0 auto;
+  img{
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

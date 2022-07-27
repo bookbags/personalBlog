@@ -43,14 +43,13 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@use "sass:color";
-@import "~@/globalCss/color.scss";
+<style scoped lang="less">
+@import "~@/globalCss/color.less";
     .Contact{
         width: 100%;
         margin: 0px;
         padding: 0px;
-        color: $words;
+        color: @words;
         li{
             padding: 10px 5px;
             position: relative;
@@ -58,16 +57,16 @@ export default {
             text-align: center;
             cursor: pointer;
             a{
-                font-size: $fontSize;
+                font-size: @fontSize;
                 text-decoration: none;
                 padding-left: 10px;
-                color: lighten($words, 30%);
+                color: lighten(@words, 30%);
                 display: flex;
                 height: 30px;
                 line-height: 30px;
                 .Icon{
                     margin-right: 3px;
-                    font-size: $fontSize;
+                    font-size: @fontSize;
                     &.weixin{
                         font-size: 27px;
                         margin-right: 1px;

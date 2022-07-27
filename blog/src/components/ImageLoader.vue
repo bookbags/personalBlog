@@ -52,7 +52,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="less">
 .ImageLoader {
   position: relative;
   width: 100%;

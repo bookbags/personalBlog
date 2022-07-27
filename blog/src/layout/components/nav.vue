@@ -38,15 +38,14 @@ export default {
   },
   data() {
     return {
-      routes: routes[1].children,
+      routes: routes[0].children,
     };
   },
 };
 </script>
 
-<style lang="scss" scoped>
-@use "sass:color";
-@import "~@/globalCss/color.scss";
+<style lang="less" scoped>
+@import "~@/globalCss/color.less";
 .nav {
   display: flex;
   width: 250px;
@@ -59,7 +58,7 @@ export default {
     div {
       font-size: 2rem;
       text-align: center;
-      color: lighten($words, 20%);
+      color: lighten(@words, 20%);
     }
   }
   main {
@@ -74,7 +73,7 @@ export default {
         padding: 1em;
         text-align: center;
         a {
-          color: $words;
+          color: @words;
           text-decoration: none;
           &:hover {
             color: yellow;

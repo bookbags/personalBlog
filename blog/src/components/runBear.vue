@@ -24,10 +24,10 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 @keyframes run {
   0% {
-    left: -00px;
+    left: -0px;
   }
   12.5% {
     left: -400px;

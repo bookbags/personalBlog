@@ -2,6 +2,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const staticBaseUrl = path.resolve(__dirname);
+
 const setRouter = require("./module/globalSet");
 const bannerRouter = require("./module/banner")
 const blogTypeRouter = require("./module/blogType");
@@ -31,7 +32,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 
 //用户访问的一件事就是鉴权，判断用户的权限
-// app.use(judegPower);
+app.use(judegPower);
 
 //获取静态资源
 app.use(express.static(staticBaseUrl));
@@ -51,6 +52,7 @@ app.use("/api/about", aboutMeRouter);
 app.get("/api/capture", (req, res)=>{
     res.send(svg.getSvg());
 })
+
 //上传接口, 只允许上传图片
 app.post("/api/upload", upload.single("file"), (req, res)=>{
     console.log(req.file);

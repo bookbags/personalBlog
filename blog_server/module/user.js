@@ -6,9 +6,11 @@
 const express = require("express");
 const resData = require("./resData");
 const svg = require("./api/captureCode");
+
 const {
     user
 } = require("../dataBase/index");
+
 const {
     createToken,
     decodeToken
@@ -50,7 +52,7 @@ userRouter.post("/login", async (req, res) => {
     };
 
     //判断用户是否存在
-    const result = await user.findOne({
+    let result = await user.findOne({
         where: {
             name: userData.name
         }
@@ -58,22 +60,25 @@ userRouter.post("/login", async (req, res) => {
     if (!result) return res.send(resData(500, "用户不存在，请注册"));
     else if (result.dataValues.uuid) {
         const token = result.dataValues.uuid;
-        res.setHeader("authorization", token);
-        res.send(resData(200, "", token));
-    } else {
-        //创建token
-        const token = createToken(userData, req.body.maxAge * 24 * 3600 || 24 * 3600); //7天免登陆或者1天免登陆
-        await user.update({
-            ...userData,
-            uuid: token
-        }, {
-            where: {
-                name: userData.name
-            }
-        });
-        res.setHeader("authorization", token);
-        res.send(resData(200, "", token));
+        result = decodeToken(token);
+        if (result) {
+            res.setHeader("authorization", token);
+            res.send(resData(200, "", token));
+            return 0;
+        }
     }
+    //创建token
+    const token = createToken(userData, req.body.maxAge * 24 * 3600 || 24 * 3600); //7天免登陆或者1天免登陆
+    await user.update({
+        ...userData,
+        uuid: token
+    }, {
+        where: {
+            name: userData.name
+        }
+    });
+    res.setHeader("authorization", token);
+    res.send(resData(200, "", token));
 })
 
 //用户免登陆

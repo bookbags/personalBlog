@@ -12,11 +12,16 @@ blogType.sync({force: true}).then(()=>{
             order: 1,
             id: new Date().getTime() + 1 + ""
         },{
-            name: "vue",
+            name: "react",
             articleCount: 0,
             order: 2,
             id: new Date().getTime() + 2 + ""
-        },
+        },{
+            name: "webpack",
+            articleCount: 0,
+            order: 3,
+            id: new Date().getTime() + 3 + ""
+        }
     ])
 }).catch((err)=>{
     console.log(err);

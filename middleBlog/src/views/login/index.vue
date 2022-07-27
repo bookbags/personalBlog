@@ -90,9 +90,7 @@ export default {
         loginPwd: "bookbags",
         capture: "",
       },
-      loginRules: {//验证规则，属性名对应ele-form-item的prop属性，value is Array，每一项是一个对象，对象就是规则
-      //复杂的规则可以写成函数，传入validator属性，默认传参的第二个参数为对应表单的值，调用callback返回提示信息，如果验证识别，callback
-      //需要传入一个错误对象
+      loginRules: {
         loginId: [{ required: true, trigger: "blur" }],
         loginPwd: [
           { required: true, trigger: "blur" }, //validator: validatePassword检验函数
@@ -131,8 +129,6 @@ export default {
     },
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
-        // vue-element-adming会给loginForm注入一个方法validate，参数为一个回调函数，
-        // 回调函数的第一个参数为boolean，表示表单验证是否通过
         if (valid) {
           this.loading = true; //触发加载指令,开始旋转
           

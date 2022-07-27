@@ -1,0 +1,20 @@
+{
+  "name": "personalblog",
+  "version": "1.0.0",
+  "description": "+ blog 前端界面\r + middleBlog 中台界面\r + blogServer 服务器\r ### skill\r + 页面 vue + axious + vue-router + vuex\r + 服务器 nodeJs + express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bookbag1/personalBlog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bookbag1/personalBlog/issues"
+  },
+  "homepage": "https://github.com/bookbag1/personalBlog#readme"
+}

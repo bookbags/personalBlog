@@ -1,6 +1,7 @@
 <template>
   <div class="layout" v-if="globalSet">
     <div class="left">
+        <Avatar :src="globalSet.avatar"></Avatar>
         <Nav :size="20" :imgUrl="globalSet.avatar"></Nav>
     </div>
     <div class="right">
@@ -11,9 +12,10 @@
 
 <script>
 import Nav from "./components/nav.vue";
+import Avatar from "./components/avatar.vue";
 export default {
   components: {
-    Nav,
+    Nav, Avatar
   },
   data() {
     return {
@@ -22,11 +24,12 @@ export default {
   },
   async created(){
       this.globalSet = await this.$store.dispatch("getGlobalData");
+      console.log(this.globalSet);
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="less" scoped>
 .layout {
   display: flex;
   width: 100%;
